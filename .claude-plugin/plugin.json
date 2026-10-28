@@ -1,0 +1,15 @@
+{
+  "name": "adagnt",
+  "displayName": "AdAgnt Ads Manager",
+  "version": "1.0.0",
+  "description": "Run Google, Amazon, Reddit and X ad campaigns from Claude: 16 skills for research, launch, reporting and wasted-spend fixes, plus the AdAgnt connector. Every live change waits for your approval.",
+  "author": {
+    "name": "AdAgnt",
+    "email": "support@adagnt.com",
+    "url": "https://adagnt.com"
+  },
+  "homepage": "https://adagnt.com/start/",
+  "repository": "https://github.com/vuedooh-bot/adagnt-claude-plugin",
+  "license": "SEE LICENSE IN LICENSE",
+  "keywords": ["ads", "google ads", "amazon ads", "reddit ads", "x ads", "meta ads", "tiktok ads", "ppc", "paid media", "marketing"]
+}
