@@ -11,5 +11,18 @@
   "homepage": "https://adagnt.com/start/",
   "repository": "https://github.com/vuedooh-bot/adagnt-claude-plugin",
   "license": "SEE LICENSE IN LICENSE",
-  "keywords": ["ads", "google ads", "amazon ads", "reddit ads", "x ads", "meta ads", "tiktok ads", "ppc", "paid media", "marketing"]
+  "keywords": [
+    "ads",
+    "google ads",
+    "amazon ads",
+    "reddit ads",
+    "x ads",
+    "meta ads",
+    "tiktok ads",
+    "ppc",
+    "paid media",
+    "marketing"
+  ],
+  "privacyPolicyUrl": "https://mcp.adagnt.com/privacy",
+  "icon": ".claude-plugin/icon.png"
 }

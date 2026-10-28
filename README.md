@@ -32,7 +32,7 @@ reads. The only network destination is the AdAgnt server
 (`https://mcp.adagnt.com`): Claude sends it the arguments of each AdAgnt tool
 it calls, and AdAgnt calls the ad platforms you connected on your behalf.
 AdAgnt does not read your Claude conversations, memory or files. Details:
-https://mcp.adagnt.com/privacy.
+https://mcp.adagnt.com/privacy
 
 ## Plans
 
