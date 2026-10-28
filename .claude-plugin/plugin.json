@@ -24,5 +24,8 @@
     "marketing"
   ],
   "privacyPolicyUrl": "https://mcp.adagnt.com/privacy",
-  "icon": ".claude-plugin/icon.png"
+  "icon": ".claude-plugin/icon.png",
+  "documentationUrl": "https://adagnt.com/start/",
+  "supportUrl": "https://mcp.adagnt.com/support",
+  "termsOfServiceUrl": "https://mcp.adagnt.com/terms"
 }
