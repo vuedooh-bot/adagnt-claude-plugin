@@ -59,7 +59,7 @@ Append-only dated log, newest first. One entry per event:
 
 - **After a campaign launch** (`adagnt-campaigns`): log the launch with IDs, budget, hypothesis, review date.
 - **After a performance review** (`adagnt-performance`): log numbers vs targets, anomalies explained, actions taken. If a target changed, update section 4 — history logs events, but current truth lives in sections 1–5.
-- **After a waste audit** (`adagnt-wasted-spend`): log waste found, cuts made, expected savings.
+- **After a waste audit** (`adagnt-wasted-spend`): log the ledger's four numbers with the currency code, and the changes the user approved.
 - **After a copy test concludes** (`adagnt-ad-copy`): move the winning pattern into section 5.
 - Keep Performance History readable: one entry per event, newest first; when it grows past ~30 entries, compress the oldest into a short "lessons so far" digest at the bottom of the section.
 - Update the `Last updated` date on every edit. Never silently rewrite history entries — append corrections instead.

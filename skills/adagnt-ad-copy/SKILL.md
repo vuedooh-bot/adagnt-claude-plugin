@@ -15,7 +15,7 @@ Read `STRATEGY.md` before writing a single line. Use:
 - **Business Profile** — the actual value proposition and proof points
 - **Target Audience** — pains and motivations to lead with
 
-If the section is thin, ask the user three quick questions (tone in three adjectives, one claim they're proudest of, one phrase they never want in an ad) rather than guessing. `suggest_ad_content` can draft candidates from `key_benefits`, `pain_points`, and `proof_points` — treat its output as raw material to edit into brand voice, not final copy.
+If the section is thin, ask the user three quick questions (tone in three adjectives, one claim they're proudest of, one phrase they never want in an ad) rather than guessing. `suggest_ad_content` can draft candidates from the benefits, pain points and proof points you pass it — treat its output as raw material to edit into brand voice, not final copy.
 
 ## Hard limits (count characters before presenting anything)
 

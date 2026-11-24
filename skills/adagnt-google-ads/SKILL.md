@@ -46,7 +46,7 @@ most accounts neglect.
 
 - `analyze_search_terms` — what people actually typed. The richest source of
   negative keywords.
-- `analyze_wasted_spend` — spend returning nothing, with opportunity cost
+- `analyze_wasted_spend` — where the spend went: wasted (proven), too early to call, working or not judged, for every Google account on the connection
 - `optimize_budget_allocation` — proposals, never applied silently
 - `explain_performance_anomaly` — why a metric moved
 - `get_benchmark_context` — how the account compares to its industry

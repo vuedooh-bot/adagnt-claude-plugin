@@ -1,7 +1,7 @@
 {
   "name": "adagnt",
   "displayName": "AdAgnt Ads Manager",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Run Google, Amazon, Reddit and X ad campaigns from Claude: 16 skills for research, launch, reporting and wasted-spend fixes, plus the AdAgnt connector. Every live change waits for your approval.",
   "author": {
     "name": "AdAgnt",

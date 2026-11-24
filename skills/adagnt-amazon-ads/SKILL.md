@@ -41,12 +41,16 @@ Each step needs the ID from the one before.
 
 ## Search terms are the goldmine
 
-Amazon has **no single wasted-spend audit tool.** The route is:
+Amazon has **no wasted-spend tool**, and AdAgnt's wasted-spend ledger does not
+judge Amazon yet. So nothing on Amazon is called wasted:
 
-1. `amazon_get_sp_search_terms_report`
-2. Terms with spend and zero attributed sales are the waste
-3. Negate them with `amazon_create_sp_negative_keywords` (or
-   `amazon_create_sp_negative_targets`)
+1. `amazon_get_sp_search_terms_report` shows Amazon's search terms with spend,
+   orders and sales. Report them as Amazon reports them.
+2. A term with spend and no sales yet is not proof of waste: it may be too
+   early. Say what it spent and that it has no sales so far, and let the user
+   decide.
+3. When the user decides to block a term, `amazon_create_sp_negative_keywords`
+   (or `amazon_create_sp_negative_targets`) files that change for approval.
 
 And the same report in reverse finds growth:
 `amazon_get_keyword_harvest_suggestions` promotes converting search terms into

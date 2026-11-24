@@ -1,50 +1,82 @@
 ---
 name: adagnt-wasted-spend
-description: Wasted-spend audit across all eight platforms — find budget going to non-converting terms, audiences, and placements; mine negative keywords from search terms; propose budget reallocation. Use for "where am I wasting money", cost-cutting passes, or monthly hygiene.
+description: Wasted-spend audit on the ad accounts a person connected — one ledger in which every unit of spend is wasted, too early to call, working or not judged, with the change that stops each leak sent for approval. Use for "where am I wasting money", cost-cutting passes, or monthly hygiene.
 ---
 
 # AdAgnt Wasted-Spend Audit
 
-Find money leaving the account without producing conversions, prove it with data, and stop it — with the user approving every cut. Target output: a dollar figure ("$X/month is going to Y for zero conversions") plus the fixes.
+The wasted-spend answer is AdAgnt's ledger. The tools compute it; report it as
+it comes back. Do not build a second definition of waste in the chat.
+
+## What the ledger says
+
+- Every unit of spend in the window gets one verdict: **wasted**, **too early
+  to call**, **working**, or **not judged**. The four add up to what the
+  platform says was spent.
+- **Wasted is proven, never assumed.** Something that took a share of the spend
+  should have brought about that share of the account's own conversions. AdAgnt
+  computes the chance of so few by luck; under 1 in 20, it is wasted.
+- **Too early to call** is everything else with no conversions yet. The answer
+  says how much more spend without a conversion would be proof.
+- **An account that records no conversions is not judged.** The answer says so.
+  The next step is conversion tracking (`audit_conversion_tracking`), never a
+  pause.
+- **Costs too much** (converts, at twice the account's cost per conversion or
+  more) is not waste and is never proposed for a pause. It is a bid or budget
+  question.
+- Money is in the account's own currency, written with its code. Do not
+  convert it and do not write a `$`.
+
+Zero conversions, few clicks or a spend threshold are not proof. Never add
+"waste" of your own to the ledger's numbers.
 
 ## Step 1 — Scope
 
-Read `STRATEGY.md` for target ROAS/CPA (waste is defined against these) and check Performance History for previous audits — don't re-flag things the user consciously chose to keep. Default window: last 30–60 days; too short and low-volume keywords look unfairly bad.
+Read `STRATEGY.md` for what the user chose to keep running on purpose, and
+Performance History for earlier audits. Use the tool's default window unless
+the user names one; a short window leaves more of the spend too early to call.
 
-## Step 2 — Run the platform audits
+## Step 2 — Run the audit on each connected platform
 
-Run every audit for platforms with spend; each returns ranked waste findings:
+- **Google Ads:** `analyze_wasted_spend`. With a `customer_id` it judges
+  campaigns, search terms and the words inside them, read from Google's search
+  terms report. Without one, when several accounts are connected, it reads
+  every account (campaigns only) and returns one row per account.
+- **Reddit Ads:** `reddit_analyze_wasted_spend`, campaigns, one account per call.
+- **X Ads:** `x_ads_analyze_wasted_spend`, campaigns, one account per call.
+- **Amazon Ads:** no wasted-spend tool, and the ledger does not judge Amazon
+  yet. Amazon's reports are reports; call nothing in them wasted.
+- **AppLovin:** no wasted-spend tool. Its campaign report carries the ledger's
+  line; report that line.
+- A platform that answers it is **not connected** or **coming soon** is not
+  audited. Say so and move on.
 
-- Google: `analyze_wasted_spend` (pass `target_roas` when the strategy defines one)
-- Meta: `analyze_meta_wasted_spend`
-- TikTok: `analyze_tiktok_wasted_spend`
-- Amazon: no single audit tool — pull `amazon_get_sp_search_terms_report` and treat search terms with spend and zero attributed sales as the waste; negate with `amazon_create_sp_negative_keywords`
-- AppLovin: `applovin_get_advertiser_report` against the campaign's `applovin_set_roas_target`
+An account the platform will not read comes back as one row with the
+platform's reason in its own words. Report that row as written; the rest of the
+answer stands.
 
-## Step 3 — Mine search terms for negatives (Google)
+## Step 3 — Report
 
-The single richest source of waste is queries that trigger ads but never convert:
+Lead with the four numbers, as returned. Then:
 
-1. Call `analyze_search_terms` with a matching `lookback_days` and a `min_clicks` floor (e.g. 5) so you judge terms with real data.
-2. Sort candidates into:
-   - **Irrelevant intent** — job seekers, DIY, free-seekers, wrong product entirely → negative, exact or phrase as appropriate
-   - **Money drains** — relevant-looking terms with meaningful spend, zero conversions over the full window → negative or bid down, case by case
-   - **Wrong-bucket terms** — converting terms landing in the wrong ad group → add as exact keywords where they belong (`add_keywords`) so they stop cross-matching
-3. Propose the negative list grouped by theme with the spend each theme burned. Apply only after approval with `add_negative_keywords` (mistakes are reversible via `remove_negative_keywords`, but blocking a converting term costs real revenue — double-check anything ambiguous with the user).
+1. Where it leaks: each leak with what it spent and the odds.
+2. What is too early to call, with how much more spend would be proof.
+3. What was not judged, and why.
+4. What the tool says it did not read on this account.
 
-## Step 4 — Audience and placement waste (Meta / TikTok)
+## Step 4 — Stop a leak
 
-- Meta: `analyze_meta_audiences` for saturated or overlapping audiences; `optimize_meta_placements` for placements that spend without converting; `detect_meta_creative_fatigue` when frequency is high and CTR is sliding.
-- TikTok: `analyze_tiktok_geo_performance` for regions that drain budget; `detect_tiktok_creative_fatigue` for worn-out creative.
+A leak comes with the change that stops it, where an AdAgnt tool makes that
+change: a pause for a campaign (`pause_campaign`), a negative keyword for a
+search term (`add_negative_keywords`). It reaches the account owner as a
+proposal; nothing changes until they approve it, and AdAgnt reads the platform
+back afterwards. Where no tool makes the change, the answer says so; say the
+same.
 
-Also confirm the "waste" is real before cutting: `audit_conversion_tracking` — untracked conversions look identical to no conversions.
+Blocking a term that converts costs revenue. When a term is ambiguous, ask.
 
-## Step 5 — Reallocate what you saved
+## Step 5 — Log
 
-Preview a rebalance with `optimize_budget_allocation` (Google; use `max_change_percentage` to keep moves conservative, `min_daily_budget` to protect small campaigns) and `optimize_meta_budget` / `optimize_tiktok_budget`. Present the before/after budget table.
-
-## Step 6 — Present, apply, log
-
-Deliver the audit as: total estimated monthly waste, findings ranked by dollar impact, and the proposed actions (negatives to add, placements/audiences to exclude, campaigns to pause via `pause_campaign` and platform variants, budgets to shift).
-
-Apply only what the user approves — one call per write tool, verify with a read tool after, never auto-retry a failed write. Then append a dated entry to STRATEGY.md → Performance History: waste found, actions taken, expected monthly savings, and a note to re-check impact at the next review.
+Append a dated entry to STRATEGY.md → Performance History: the window, the four
+numbers with the currency code, the changes the user approved, and a date to
+look again.

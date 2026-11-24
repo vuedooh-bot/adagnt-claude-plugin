@@ -5,7 +5,7 @@ description: The AdAgnt tool-call contract — how to resolve accounts, the hard
 
 # AdAgnt tool-call contract
 
-348 tools across eight ad platforms. Most failed calls are not hard problems —
+352 tools across eight ad platforms. Most failed calls are not hard problems —
 they are the same handful of avoidable mistakes. This is that list.
 
 ## 1. Resolve the account before anything else
@@ -23,9 +23,18 @@ pass the profile explicitly. A US profile cannot see UK campaigns.
 
 **AppLovin** uses accounts from `applovin_list_accounts`.
 
-If no account exists you get `NO_ACCOUNT`. In sandbox that usually means the
-platform has not been touched yet — a demo account with 90 days of history is
-created the first time you use a platform, so simply proceeding will seed it.
+AdAgnt answers only from the ad accounts the person connected. Nothing is
+answered from sample data. When a platform cannot answer you get `NO_ACCOUNT`,
+and the message says which of four things it is:
+
+- **Not connected** — the message carries the Connect link (it opens that
+  platform's own sign-in). Give the user the link, or call
+  `get_connections_status` to show the card.
+- **The login has no ad accounts** — the message says which login to use.
+- **The platform did not answer just now** — ask again in a few minutes.
+- **Coming soon** — "Meta Ads is coming soon to AdAgnt. Today AdAgnt works
+  with …". That is the whole answer for that platform: say it, name the
+  platforms that work today, and stop.
 
 ## 2. Hard argument limits that reject the call
 
@@ -46,8 +55,8 @@ never promise them a smaller number — Google itself allows 3–15 headlines an
 
 ## 3. Order of operations that actually matters
 
-- **`get_true_roas` throws without saved revenue assumptions.** Check
-  `list_revenue_sources` first; if empty, propose `connect_revenue_source`
+- **`get_roas_estimates` throws without saved revenue assumptions.** Check
+  `list_revenue_sources` first; if empty, propose `set_revenue_assumptions`
   (a provider label plus the user's average order value — nothing is connected
   to GA4, Shopify, Stripe or Klaviyo; revenue is modelled as conversions ×
   order value over 90 days) and wait for approval. Do not call it and report
@@ -66,15 +75,15 @@ never promise them a smaller number — Google itself allows 3–15 headlines an
 |---|---|---|
 | `INVALID_ARGS` | Arguments failed validation | Read the message — it names the field. Fix and retry **once**. |
 | `NOT_FOUND` | The named object does not exist | List first, then act on a real ID. Never guess an ID. |
-| `NO_ACCOUNT` | No connected account for that platform | Offer to connect it. |
+| `NO_ACCOUNT` | The platform cannot answer for this person: not connected, a login with no ad accounts, the platform did not answer, or the platform is coming soon. The message says which. | Report the message as written (it carries the Connect link when there is one). Do not retry, and do not answer from memory or examples instead. |
 | `NOT_SUPPORTED` | The operation is not available on this driver | Not a bug. Say so plainly and stop. |
 | `PLATFORM_ERROR` | The ad platform itself rejected the call | Report the platform's reason. Do not retry a write. |
-| `QUOTA_EXCEEDED` | Monthly write allowance reached (free plan: 10 changes a month) | Report it; reads still work. `get_usage_status` shows plan and reset date. |
+| `QUOTA_EXCEEDED` | A monthly allowance was reached (free plan: 20 reads and 10 changes a month; no cap during launch, so not returned until launch ends) | Report it. `get_usage_status` shows what is left and the reset date. |
 
 **Known `NOT_SUPPORTED`: AppLovin on a live account.** All writes throw, plus
 creative-set listing, asset listing and targeting search. Campaign reads and
-the whole reporting surface work. In sandbox all 36 AppLovin tools work. Tell
-the user which they are hitting rather than implying a bug.
+the whole reporting surface work. Tell the user which they are hitting rather
+than implying a bug.
 
 ## 5. Writes
 
@@ -92,13 +101,14 @@ the user which they are hitting rather than implying a bug.
 
 ## 6. Quota
 
-Only writes are metered. Every plan, free included, connects any number of ad
-accounts, and reads (reports, analysis, diagnostics) are never counted. The
-free plan allows 10 writes a month; paid is unlimited. `get_usage_status`
-returns the plan, the monthly write limit (null = unlimited), the ad-account
-limit (null = unlimited on every plan), the reset date, and the upgrade
-options. When the write allowance is hit, write tools stop cleanly — nothing is
-left half-changed, and reads keep working.
+Every plan, free included, connects any number of ad accounts. The free plan
+allows 20 reads (reports, analysis, diagnostics) and 10 writes a month; paid
+plans read without limit and allow more writes (Agency has no cap). During
+launch no plan is capped: calls are counted and nothing is refused, and
+`get_usage_status` says so (`limits_enforced: false`). `get_usage_status` returns the plan, this month's reads and
+writes so far, how many are left (null = no limit on this plan), the reset
+date, and the plans above. When an allowance is hit, the tool stops cleanly —
+nothing is left half-changed.
 
 ## 7. Results
 

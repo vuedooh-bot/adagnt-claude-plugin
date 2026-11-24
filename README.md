@@ -5,10 +5,10 @@ keywords with real search volumes and bid ranges, build complete campaigns,
 report on performance across platforms in one answer, find the spend that
 returns nothing, and move budget toward what converts.
 
-Live accounts connect today for **Google Ads, Amazon Ads, Reddit Ads and X Ads**,
-and **AppLovin** for reporting. Meta, TikTok and Snapchat run on demo data
-while their API reviews finish. You start in a sandbox with realistic demo
-accounts, so you can try everything with no ad account and no risk.
+Accounts connect today for **Google Ads, Amazon Ads, Reddit Ads and X Ads**,
+and **AppLovin** for reports. Meta, TikTok and Snapchat are coming soon.
+AdAgnt answers from the ad accounts you connect. Until you connect one, it
+says how; nothing is answered from sample data.
 
 **You approve every live change.** On a live account, a change Claude asks for
 is filed as a proposal with the current and proposed values. Nothing reaches
@@ -36,8 +36,9 @@ https://mcp.adagnt.com/privacy
 
 ## Plans
 
-Free: every ad account you run, unlimited reading, and 10 changes a month,
-no card needed. Paid plans remove the change limit. See https://adagnt.com.
+Free: every ad account you run, 20 reads and 10 changes a month (no cap during launch),
+no card needed. Paid plans read without limit and allow more changes; Agency
+has no cap. Prices: https://adagnt.com/#pricing.
 
 ## Support
 

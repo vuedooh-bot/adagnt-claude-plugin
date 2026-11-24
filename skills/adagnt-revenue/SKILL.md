@@ -11,7 +11,7 @@ Why it still earns its place: conversion *value* is what each platform claims it
 
 ## Step 1 — Set the revenue assumptions
 
-Check what is saved with `list_revenue_sources`. If nothing is set, or the user wants different assumptions, save them with `connect_revenue_source`:
+Check what is saved with `list_revenue_sources`. If nothing is set, or the user wants different assumptions, save them with `set_revenue_assumptions`:
 
 - `source` — one of `ga4`, `shopify`, `stripe`, `klaviyo`: the provider the user sells through. It is kept as a label on the assumptions only; nothing is connected to it or pulled from it. Say that before you call.
 - `property_id` — optional store or property identifier, stored next to the label for the user's reference.
@@ -23,7 +23,7 @@ One set of assumptions is enough. If the user saves several, the modelled events
 
 ## Step 2 — Read the ROAS estimates
 
-`get_true_roas` returns, per campaign, modelled revenue ÷ spend, ranked worst-to-best, each with a verdict. Thresholds: kill below 0.8, fix from 0.8, keep from 1.5, scale from 3.0. The tool name says "true"; the numbers are modelled, so present them as estimates. What the verdicts mean and what to do:
+`get_roas_estimates` returns, per campaign, modelled revenue ÷ spend, ranked worst-to-best, each with a verdict. Thresholds: kill below 0.8, fix from 0.8, keep from 1.5, scale from 3.0. The numbers are modelled, so present them as estimates. What the verdicts mean and what to do:
 
 - **kill** — spend with no modelled revenue to show for it over the window, which means few or no reported conversions. Recommend pausing; the burden of proof is on the campaign now. Check one thing first: is the sales cycle longer than the date range? A 30-day window will condemn a 60-day B2B cycle unfairly.
 - **fix** — conversions are coming in, but the ratio is bad at the user's order value. Something specific is usually broken: targeting, landing page, bid strategy or creative. Diagnose before touching budget — `adagnt-performance` has the anomaly tools.

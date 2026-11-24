@@ -8,6 +8,10 @@ description: Meta Ads through AdAgnt — image, video, carousel and DCO campaign
 36 tools: 21 read, 15 write. Read-heavy by design — Meta rewards understanding
 the audience before spending.
 
+If a tool answers that Meta Ads is coming soon to AdAgnt, or that it is not
+connected, that is the whole answer: say so, name the platforms the message
+says work today, and stop. Nothing is answered from sample data.
+
 ## Start here
 
 `list_meta_campaigns`, `get_meta_campaign_details`,

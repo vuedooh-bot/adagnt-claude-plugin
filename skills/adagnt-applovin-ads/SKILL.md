@@ -18,8 +18,6 @@ search.
 What *is* live: campaign listing and detail, account settings, and the whole
 reporting surface (advertiser, ROAS cohort, retention, creative performance).
 
-In sandbox all 36 tools work normally, so this only bites on real accounts.
-
 This is a deliberate driver limitation — AdAgnt does not perform AppLovin writes
 it has not validated against a real key, because a wrong write body
 misconfigures a live campaign. It is not a bug and not a failed call. Say

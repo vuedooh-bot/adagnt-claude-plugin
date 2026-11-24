@@ -22,10 +22,10 @@ media kept as account-level libraries that ads point at.
 - **Creative changes re-enter Snapchat review.** Swapping a creative with
   `snapchat_update_ad` or creating a new ad means the ad serves only after
   Snapchat approves it; say so when you propose it.
-- Until the user links a Snapchat account, every tool runs on the sandbox
-  (an ad account with campaigns, squads, ads and 90 days of stats). If the
-  account is not linked and the user wants real data, point them to
-  `get_connections_status`.
+- If a tool answers that Snapchat Ads is coming soon to AdAgnt, or that it is
+  not connected, that is the whole answer: say so, give the Connect link when
+  the message has one (`get_connections_status` shows the card), and stop.
+  Nothing is answered from sample data.
 
 ## Start here
 

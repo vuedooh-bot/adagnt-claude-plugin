@@ -16,11 +16,11 @@ Bring a new workspace from zero to fully connected. Work through the phases in o
    - Codex: `plugins/codex/config.toml`
    - ChatGPT: `plugins/chatgpt/README.md`
    The default local endpoint is `http://localhost:8734/mcp`.
-3. Once tools appear, call `get_usage_status` to confirm the account is active and to learn the plan's write allowance. Tell the user what plan they are on and how many changes they have left this month; ad accounts and reads are unlimited on every plan, so there is no account limit to report.
+3. Once tools appear, call `get_usage_status` to confirm the account is active and to learn the plan's write allowance. Tell the user what plan they are on and how many reads and changes they have left this month (`reads_left`, `writes_left`; null means no limit). Ad accounts are unlimited on every plan, so there is no account limit to report.
 
 ## Phase 2 — Connect ad platforms
 
-1. Call `get_connections_status` (no arguments) to see which of Google Ads, Meta Ads, TikTok Ads, Amazon Ads, AppLovin, Reddit Ads and X Ads are already linked.
+1. Call `get_connections_status` (no arguments). The card lists every platform in three groups: the ones already connected, the ones ready to connect, and the ones coming soon. Only the first two can be used today.
 2. Ask the user which platforms they actually advertise on. Do not push them to connect platforms they do not use.
 3. For each missing platform, direct the user to the AdAgnt dashboard to complete OAuth in their browser. Never ask for passwords, tokens, or API keys in chat — authorization happens only through the platform's own consent screen.
 4. After each authorization, re-run `get_connections_status` until the platform shows as connected.
@@ -29,7 +29,7 @@ Bring a new workspace from zero to fully connected. Work through the phases in o
 
 1. Call `list_connected_accounts` for each connected platform (pass the `platform` argument) and show the user the accounts found.
 2. If more than one account exists per platform, ask which is primary and call `switch_primary_account` accordingly.
-3. Sanity-check read access with one cheap read per platform: `list_campaigns` (Google), `list_meta_campaigns`, `list_tiktok_campaigns`. Empty results are fine; errors are not — surface any error verbatim and stop until resolved.
+3. Sanity-check read access with one cheap read per connected platform: `list_campaigns` (Google), `amazon_list_profiles`, `reddit_list_campaigns`, `x_ads_list_campaigns`, `applovin_list_campaigns`. Empty results are fine; errors are not — surface any error verbatim and stop until resolved. Do not read a platform the card shows as not connected or coming soon.
 
 ## Phase 4 — Seed the strategy document
 

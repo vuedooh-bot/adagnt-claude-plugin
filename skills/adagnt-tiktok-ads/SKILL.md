@@ -7,6 +7,10 @@ description: TikTok Ads through AdAgnt — video and carousel campaigns, ad grou
 
 29 tools: 14 read, 15 write.
 
+If a tool answers that TikTok Ads is coming soon to AdAgnt, or that it is not
+connected, that is the whole answer: say so, name the platforms the message
+says work today, and stop. Nothing is answered from sample data.
+
 ## Start here
 
 `list_tiktok_campaigns`, `get_tiktok_campaign_details`,
