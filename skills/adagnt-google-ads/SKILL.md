@@ -61,10 +61,13 @@ beats generic copy.
 
 ## Writes
 
-Every create/update/pause/remove here spends or changes money. Follow
-`adagnt-agent`: propose every field, wait, then create.
+Every create/update/pause/remove here changes money. On a connected account
+each one files a proposal the account owner approves; follow `adagnt-agent`:
+say every field, file it once, report the read-back.
 
-**Google campaigns are created ENABLED and start spending.** Call
-`pause_campaign` immediately after creating, in the same turn, unless the user
-asked for it to go live — then read back the status with `list_campaigns` or
-`get_campaign_structure` before telling them it is paused.
+**A Google campaign is created with its switch ENABLED** once the proposal is
+approved. Say so in the plan, before the approval. To land it paused, put
+`pause_campaign` in the same `propose_plan`, after the create, so one approval
+does both. Read the status back with `list_campaigns` or
+`get_campaign_structure` and report Google's own words: ENABLED is the switch;
+`primary_status` says what Google has in effect.

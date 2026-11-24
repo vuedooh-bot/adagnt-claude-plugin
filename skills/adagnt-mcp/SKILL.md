@@ -76,6 +76,7 @@ never promise them a smaller number — Google itself allows 3–15 headlines an
 | `INVALID_ARGS` | Arguments failed validation | Read the message — it names the field. Fix and retry **once**. |
 | `NOT_FOUND` | The named object does not exist | List first, then act on a real ID. Never guess an ID. |
 | `NO_ACCOUNT` | The platform cannot answer for this person: not connected, a login with no ad accounts, the platform did not answer, or the platform is coming soon. The message says which. | Report the message as written (it carries the Connect link when there is one). Do not retry, and do not answer from memory or examples instead. |
+| `FORBIDDEN` | This agent may not do that, for example approve a proposal it filed itself | Say who can: the account owner, on the card or in the AdAgnt app. Do not retry. |
 | `NOT_SUPPORTED` | The operation is not available on this driver | Not a bug. Say so plainly and stop. |
 | `PLATFORM_ERROR` | The ad platform itself rejected the call | Report the platform's reason. Do not retry a write. |
 | `QUOTA_EXCEEDED` | A monthly allowance was reached (free plan: 20 reads and 10 changes a month; no cap during launch, so not returned until launch ends) | Report it. `get_usage_status` shows what is left and the reset date. |
@@ -87,6 +88,16 @@ than implying a bug.
 
 ## 5. Writes
 
+- **On a connected ad account a write files a proposal.** The call returns
+  `status: pending_approval` with the current and proposed values, and nothing
+  has changed. The account owner approves it on the card shown with the result
+  or in the AdAgnt app; AdAgnt then makes the change once and reads the
+  platform back. `list_pending_actions` shows what is waiting. Approving your
+  own proposal with `manage_action` is refused (`FORBIDDEN`).
+- A few write tools change only AdAgnt's own records (monitors, schedules,
+  strategy, revenue assumptions, to-dos, the primary account). Their
+  descriptions say "Changes AdAgnt's own settings, not the ad account"; they
+  run when called.
 - Every write tool is annotated **destructive**, so ChatGPT raises its own
   permission prompt. That prompt describes intent, not values — it is not a
   substitute for showing the user the actual budget, keywords and ad copy.

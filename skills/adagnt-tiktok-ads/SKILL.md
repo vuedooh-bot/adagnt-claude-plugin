@@ -63,10 +63,8 @@ often finds a region carrying or dragging the whole campaign.
 
 ## Pausing
 
-**TikTok campaigns are created ENABLED and start spending.** Call
-`pause_tiktok_campaign` immediately after creating, in the same turn, unless the
-user asked for it to go live — then read the status back before saying it is
-paused.
+A TikTok campaign is created with its switch ENABLED. Say so in the plan,
+before the approval, and read the status back before saying what it is.
 
 When fixing a live account, pause at the level the problem lives:
 `pause_tiktok_ad`, `pause_tiktok_ad_group`, `pause_tiktok_campaign`. Pausing a

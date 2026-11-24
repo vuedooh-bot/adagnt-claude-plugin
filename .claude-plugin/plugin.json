@@ -1,8 +1,8 @@
 {
   "name": "adagnt",
   "displayName": "AdAgnt Ads Manager",
-  "version": "1.0.1",
-  "description": "Run Google, Amazon, Reddit and X ad campaigns from Claude: 16 skills for research, launch, reporting and wasted-spend fixes, plus the AdAgnt connector. Every live change waits for your approval.",
+  "version": "1.0.2",
+  "description": "Run Google, Amazon, Reddit and X ad campaigns from Claude: 16 skills for research, launch, reporting and wasted-spend fixes, plus the AdAgnt connector. A change to a connected ad account is filed as a proposal and waits for approval.",
   "author": {
     "name": "AdAgnt",
     "email": "support@adagnt.com",

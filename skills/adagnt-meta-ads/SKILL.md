@@ -67,7 +67,6 @@ lead quality is a vanity metric — say so when the data allows.
 
 ## Writes
 
-**Meta campaigns are created ENABLED and start spending.** Call
-`pause_meta_campaign` immediately after creating, in the same turn, unless the
-user asked for it to go live — then read the status back before saying it is
-paused. Otherwise follow `adagnt-agent`.
+Meta campaigns are created PAUSED so the structure can be reviewed first;
+`resume_meta_campaign` starts one, as its own change. Read the status back
+before saying what it is. Otherwise follow `adagnt-agent`.

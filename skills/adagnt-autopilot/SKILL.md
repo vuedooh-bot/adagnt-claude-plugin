@@ -40,7 +40,7 @@ Order the walkthrough by dollar impact, largest first. If an action's rationale 
 
 For each action, get one of three answers from the user:
 
-- **Approve** — `manage_action` with the action id and an approve decision. Call it once. Then verify the change landed with the matching read tool (`get_campaign_performance`, `list_campaigns`, or the platform equivalent) and echo what actually changed.
+- **Approve** — the account owner approves on the card or in the AdAgnt app; or, when they tell you to, `manage_action` with the action id and an approve decision, which makes the change on the ad platform at once. Call it once. Then verify the change landed with the matching read tool (`get_campaign_performance`, `list_campaigns`, or the platform equivalent) and echo what actually changed.
 - **Reject** — `manage_action` with a reject decision. Note why, so the same proposal isn't relitigated next cycle.
 - **Defer** — leave it in the queue. Fine. Say when it will come up again.
 

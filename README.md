@@ -10,9 +10,22 @@ and **AppLovin** for reports. Meta, TikTok and Snapchat are coming soon.
 AdAgnt answers from the ad accounts you connect. Until you connect one, it
 says how; nothing is answered from sample data.
 
-**You approve every live change.** On a live account, a change Claude asks for
-is filed as a proposal with the current and proposed values. Nothing reaches
-your ad account until you approve it in the AdAgnt app.
+**Changes to an ad account wait for approval.** On a connected ad account, a
+change Claude asks for is filed as a proposal with the current and proposed
+values. Nothing reaches the ad account until it is approved, on the card in
+the chat or in the AdAgnt app. AdAgnt then makes the change once, reads the
+platform back and records it in a ledger.
+
+What that does and does not cover:
+
+- Claude cannot approve a proposal it filed itself.
+- A proposal filed by AdAgnt's own automation (a monitor, or an autopilot
+  sweep you asked for) waits in the same queue. You can approve it on the card
+  or in the app, or tell Claude to approve it; Claude then calls
+  `manage_action`, and that call makes the change on the ad platform.
+- Tools that change only AdAgnt's own records (monitors, schedules, saved
+  strategy and revenue assumptions, the to-do list, which account is primary)
+  run when Claude calls them. They change nothing in an ad account.
 
 ## What's in the plugin
 
@@ -31,8 +44,22 @@ The plugin runs no code on your machine. The skills are instructions Claude
 reads. The only network destination is the AdAgnt server
 (`https://mcp.adagnt.com`): Claude sends it the arguments of each AdAgnt tool
 it calls, and AdAgnt calls the ad platforms you connected on your behalf.
-AdAgnt does not read your Claude conversations, memory or files. Details:
-https://mcp.adagnt.com/privacy
+
+- **Your files.** The AdAgnt server cannot read files on your machine. Some
+  skills have Claude keep a `STRATEGY.md` in your workspace: Claude reads and
+  writes that file there.
+- **What is stored.** AdAgnt stores what its tools are given and what they
+  change: your account email, the ad accounts you connect and their access
+  tokens (encrypted), the business profile and strategy notes Claude saves
+  with `save_business_profile` and `update_strategy` (what you sell, your
+  audience, goals and budget guidance), and the ledger of every change with
+  who asked and why.
+- **Personal data in your ad accounts.** A tool that reads personal data held
+  in an ad account (for example lead-form submissions on Meta, once Meta is
+  live) returns it to Claude in the chat.
+- AdAgnt does not read your Claude conversations or Claude's memory.
+
+Details: https://mcp.adagnt.com/privacy
 
 ## Plans
 
